@@ -9,7 +9,7 @@
         </div>
         </fieldset>
     <% end %>
-    <% if User.current.allowed_to?(:log_time, @project) %>
+    <% if ( User.current.allowed_to?(:log_time, @project) && !@issue.status.is_default ) %>
         <fieldset class="tabular"><legend><%= l(:button_log_time) %></legend>
         <%= labelled_fields_for :time_entry, @time_entry do |time_entry| %>
         <div class="splitcontentleft">

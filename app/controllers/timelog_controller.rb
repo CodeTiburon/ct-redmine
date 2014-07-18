@@ -109,11 +109,13 @@ class TimelogController < ApplicationController
   end
 
   def new
+    # binding.pry
     @time_entry ||= TimeEntry.new(:project => @project, :issue => @issue, :user => User.current, :spent_on => User.current.today)
     @time_entry.safe_attributes = params[:time_entry]
   end
 
   def create
+
     @time_entry ||= TimeEntry.new(:project => @project, :issue => @issue, :user => User.current, :spent_on => User.current.today)
     @time_entry.safe_attributes = params[:time_entry]
 
@@ -148,6 +150,9 @@ class TimelogController < ApplicationController
         format.api  { render :action => 'show', :status => :created, :location => time_entry_url(@time_entry) }
       end
     else
+
+      # binding.pry
+
       respond_to do |format|
         format.html { render :action => 'new' }
         format.api  { render_validation_errors(@time_entry) }

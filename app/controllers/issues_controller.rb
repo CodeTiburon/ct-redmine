@@ -100,6 +100,7 @@ class IssuesController < ApplicationController
   end
 
   def show
+
     @journals = @issue.journals.includes(:user, :details).reorder("#{Journal.table_name}.id ASC").all
     @journals.each_with_index {|j,i| j.indice = i+1}
     @journals.reject!(&:private_notes?) unless User.current.allowed_to?(:view_private_notes, @issue.project)
@@ -113,6 +114,9 @@ class IssuesController < ApplicationController
     @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
     @priorities = IssuePriority.active
     @time_entry = TimeEntry.new(:issue => @issue, :project => @issue.project)
+
+    # binding.pry
+
     respond_to do |format|
       format.html {
         retrieve_previous_and_next_issue_ids
