@@ -1,0 +1,10 @@
+peterjdaniels.novikhosting.com
+
+DB access:
+DB Name: novikhosting_wp
+DB User: novikhosting_wp
+DB User Pass: Hae2iec1g
+
+Admin access to Wordpress:
+Login: admin
+Password: taHuo3Rid

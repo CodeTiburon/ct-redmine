@@ -1,0 +1,4 @@
+- e-shop
+- social media
+- mobile (list of target devices?)
+- categories

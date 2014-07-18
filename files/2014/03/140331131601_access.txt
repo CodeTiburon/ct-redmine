@@ -1,0 +1,72 @@
+magento:
+
+magadmin
+o613q5t197Vee6C
+
+*************************************************************
+Control Panles
+
+Plesk Control Panel at 1&1
+URL:  https://74.208.192.16:8443
+LOGIN: root
+PASS: E2YDeJKu
+
+*************************************************************
+
+Website Control Panel
+URL: http://aaadistributor.com/admin
+URL: http://lesscare.com/admin
+LOGIN: admin
+PASS: AGA3DGh2501
+
+ 
+FTP and SSH
+ssh aaadistributor@test.aaadistributor.com
+System user: aaadistributor
+Password: p4uQ26F3Dr
+
+
+FTP account
+aaadistributor.com
+user: novikdesign
+password: fY5E77sm
+
+
+Mysql test:
+db:test_aaad
+test_aaad_user
+LTa6lu92alU02
+
+
+Access to test.aaadistributor.com
+Plesk
+https://novikhosting.com:8443/
+Domain user: aaadistributor.com
+Password: p4uQ26F3Dr
+
+ 
+FTP and SSH
+System user: aaadistributor
+Password: p4uQ26F3Dr
+
+
+
+
+UPS:
+AccessLicenseNumber = "ECA0747B85607E98"
+UserID = "aaafreight"
+Password = "aaaa1101"
+shipperNumber = "76696A"
+credentials = 1
+zipCode = "19114"
+
+Freight: ECHO
+https://www.echotrak.com/Login.aspx?ReturnUrl=/Default.aspx
+
+new info: www.echotrak.com
+L: Ed2013
+P: Ed2013
+
+http://www.echo.com/ShipmentTracking/EchoShipmentTrack.aspx
+
+u1884

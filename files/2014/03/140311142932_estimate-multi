@@ -1,0 +1,41 @@
+ Create module
+   |- controllers
+     |- PopUp +
+     |- Delivery handler logic ( product in cart is are in stock ) +
+     |- multi-date process checkout
+       |- steps checkout
+         |- login +
+         |- add or select address +
+         |- select shipping ~ 8
+           |- calculate shipping cost ~ 16
+         |- select payment ~ 4
+           |- amount to paid  ~ 4-6
+         |- review order ~ 8
+         |- response on success or error ~ 4
+       |- backTo.'*'.Action ~ 5x4 
+   |- models
+     |- model handler "quote"
+       |- init model +
+         |- Garbage Collector for previous steps ~8
+       |- copy default shipping address ~ 8
+     |- state checkout model
+       |- set completed steps ~ 3
+       |- set & get active step ~ 3
+   |- view 
+     |- view product page +
+     |- vew category page +
+     |- view slider +
+     |- view cart +
+     |- view checkout process
+       |- checkout steps  ~+ ( примерно готово )
+       |- login +
+       |- add or select address +
+       |- select shipping ~ 2
+       |- select payment ~ 2
+       |- review order ~ 4
+   |- configuration
+     |- module +
+     |- template frontend views ~+
+   |- block
+     |- modify block onnepage checkout ~2-3
+

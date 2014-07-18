@@ -1,0 +1,4 @@
+Plesk Control Panel
+URL:  https://novikhosting.com:8443/
+LOGIN: admin
+PASS: dlB0OuEV

@@ -1,0 +1,113 @@
+to create new working enviroment you need to do next steps:
+1) you should have: .pem file for access to s3 server, ssh access to codetiburon server, aws console access, jenkins access, github access
+
+2) setup aws new instance with default ubuntu 12.04 AMI, if it is t1.micro you should setup swapfile for serving low memory issues. Install next services and tools: lessc, nginx (with vhost), php-fpm, mysql (with db), git
+
+3) create 3 new tasks in jenkins for deployment and call them in next way: "[ENV] LinkAvie" (download source codes), "[ENV] LinkAvie Deployment" (update enviroment), "[ENV] LinkAvie Composer" (update composer)
+3.1) [ENV] LinkAvie Deployment settings
+Source Code Management: None
+Add build step -> Execute shell -> Command: /home/jenkinsc/jobs/linkavie/[ENV]_deploy.sh
+3.2) [ENV] LinkAvie settings
+Source Code Management: Git
+Repository URL: https://[GIT USER]:[GIT PASS]@github.com/CodeTiburon/linkavie.git
+Branches to build: product/master
+Post-build actions -> Add post-build actions -> Build other projects: [ENV] LinkAvie Deployment
+3.3) [ENV] LinkAvie Composer settings
+Source Code Management: None
+Add build step -> Execute shell -> Command: /home/jenkinsc/jobs/linkavie/[env]_composer.sh
+
+4) deployment scripts described in 3
+4.1) /home/jenkinsc/jobs/linkavie/[ENV]_deploy.sh should have next content:
+rsync -crve 'ssh -i /home/jenkinsc/jobs/linkavie/[ENV_PEM_FILE].pem' /var/lib/jenkins/workspace/"[ENV] LinkAvie"/ ubuntu@[ENV_PUBLIC_URL]:/var/www/[ENV_FOLDER]/;
+php /home/jenkinsc/jobs/linkavie/[ENV]_mysql.php;
+curl http://[ENV_PUBLIC_URL]/less.php;
+
+Notes: /home/jenkinsc/jobs/linkavie/[ENV_PEM_FILE].pem should have 0400 permissions; host key should be added in known_hosts file in /var/lib/jenkins/.ssh/known_hosts
+4.2) /home/jenkinsc/jobs/linkavie/[env]_composer.sh should have next content:
+ssh -i /home/jenkinsc/jobs/linkavie/[ENV_PEM_FILE].pem ubuntu@[ENV_PUBLIC_URL] "cd /var/www/[ENV_FOLDER]/; php -dmemory_limit=1G composer.phar update;";
+
+5) deployment scripts described in 4
+5.1) /home/jenkinsc/jobs/linkavie/[ENV]_mysql.php - updates db on the server, should have next content:
+<?php 
+$dbFolder = '/var/lib/jenkins/workspace/"[ENV] LinkAvie"/database/delta/';
+$doneFiles = array(); $allFiles = array();
+$doneFilesStorage = file_get_contents('/home/jenkinsc/jobs/linkavie/[ENV]_data');
+if($doneFilesStorage) $doneFiles = unserialize($doneFilesStorage);
+foreach (glob($dbFolder.'*.sql') as $filename) $allFiles[] = str_replace('[ENV] LinkAvie','"[ENV] LinkAvie"',$filename);
+sort($allFiles);
+if(count($allFiles)) {
+	foreach($allFiles as $file) {
+		if(in_array($file,$doneFiles) == false) {
+			system('mysql -u[MYSQL_USER] -p[MYSQL_PASS] -h[ENV_PUBLIC_URL] [DB_NAME] < '.$file);
+			$doneFiles[] = $file;
+		}
+	}
+	file_put_contents('/home/jenkinsc/jobs/linkavie/[ENV]_data',serialize($doneFiles));
+}
+
+Notes: /home/jenkinsc/jobs/linkavie/[ENV]_data should be created and have 0777 permissions; [MYSQL_USER] and [DB_NAME] should be created
+5.2) http://[ENV_PUBLIC_URL]/less.php - converts less to css files on the aws instance, should be available for web and placed in nginx doc root /var/www/ by default with next content:
+<?php
+$lessFolder = '/var/www/[ENV_FOLDER]/public/assets/linkavie/less'; $cssFolder = '/var/www/[ENV_FOLDER]/public/assets/linkavie/css'; $GLOBALS['folders'] = array();
+function listFolderFiles($dir){
+    $ffs = scandir($dir);
+    $GLOBALS['folders'][$dir] = array();
+    foreach($ffs as $ff){ if($ff != '.' && $ff != '..'){ if(is_dir($dir.'/'.$ff)) { listFolderFiles($dir.'/'.$ff); } else { $GLOBALS['folders'][$dir][] = $ff; } } }
+}
+listFolderFiles( $lessFolder );
+if(count($GLOBALS['folders'])) {
+    foreach($GLOBALS['folders'] as $lessDir => $files) {
+        $cssDir = str_replace($lessFolder, $cssFolder, $lessDir);
+		if( !is_dir($cssDir) ) mkdir($cssDir);
+        if(count($files)) {
+            foreach($files as $lessFile) {
+                $cssFile = str_replace('.less', '.css', $lessFile);
+                @unlink($cssDir . '/' . $cssFile);
+                @system("lessc $lessDir/$lessFile > $cssDir/$cssFile");
+            }
+        }
+    }
+}
+
+6) create bucket for that instance on AWS S3
+7) create local.php under [ENV_FOLDER]/config/autoload/ with next content:
+<?php
+return array(
+    'db' => array(
+		'dsn' => 'mysql:dbname=[DB_NAME];host=localhost',
+        'username' => '[MYSQL_USER]',
+        'password' => '[MYSQL_PASS]',
+    ),
+    'phpSettings' => array(
+        'display_startup_errors' => true,
+        'display_errors' => true,
+    ),
+	'environment' => 'production',
+	'aws.amazon'           => [
+        'access_key_id'     => '[AWS_KEY_ID]',
+        'secret_access_key' => '[AWS_ACCESS_KEY]',
+        'bucket'            => '[AWS_BUCKET_NAME]',
+        'storageUrl'        => '[AWS_STORAGE_URL]'
+    ]
+);
+
+Note: this file contains env specific variables
+8) create mail.local.php under [ENV_FOLDER]/config/autoload/ with next mail settings:
+<?php
+return array(
+    'smtp' => [
+        'name'              => 'linkavie',
+        'host'              => 'in.mailjet.com',
+        'connection_class'  => 'login',
+        'connection_config' => [
+            'ssl'      => 'tls',
+            'username' => 'e7671485bab04a99067b7e525c8edd27',
+            'password' => '181035b039093719d20657e7bd361bf8',
+        ],
+    ],
+);
+9) change permissions to 0777 on next folders:
+/var/www/[ENV_FOLDER]/public/assets/linkavie/css/
+/var/www/[ENV_FOLDER]/public/uploads/
+/var/www/[ENV_FOLDER]/data/backup/
+10) run "[ENV] LinkAvie Composer" jenkins job

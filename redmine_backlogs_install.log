@@ -1,0 +1,241 @@
+Migrating redmine_backlogs (Redmine Backlogs)...
+==  CreateStoriesTasksSprintsAndBurndown: migrating ===========================
+-- add_column(:issues, :position, :integer)
+   -> 0.2036s
+-- add_column(:issues, :story_points, :integer)
+   -> 0.1877s
+-- add_column(:issues, :remaining_hours, :float)
+   -> 0.1951s
+-- add_column(:versions, :sprint_start_date, :date, {:null=>true})
+   -> 0.1176s
+-- create_table(:burndown_days)
+   -> 0.2027s
+-- add_index(:burndown_days, :version_id)
+   -> 0.0709s
+-- execute("update issues set start_date = NULL where due_date < start_date")
+   -> 0.0006s
+==  CreateStoriesTasksSprintsAndBurndown: migrated (0.9797s) ==================
+
+==  MigrateLegacy: migrating ==================================================
+-- create_table(:rb_issue_history)
+   -> 0.0552s
+-- add_index(:rb_issue_history, :issue_id, {:unique=>true})
+   -> 0.0651s
+-- create_table(:rb_sprint_burndown)
+   -> 0.0722s
+-- add_index(:rb_sprint_burndown, :version_id, {:unique=>true})
+   -> 0.0866s
+-- add_column(:issues, :release_id, :integer)
+   -> 0.2548s
+==  MigrateLegacy: migrated (0.5471s) =========================================
+
+==  OrderTasksUsingTree: migrating ============================================
+==  OrderTasksUsingTree: migrated (0.0223s) ===================================
+
+==  ChangeIssuePositionColumn: migrating ======================================
+-- change_column(:issues, :position, :integer, {:null=>true, :default=>nil})
+   -> 0.0175s
+==  ChangeIssuePositionColumn: migrated (0.0178s) =============================
+
+==  AddReleaseTables: migrating ===============================================
+-- create_table(:releases)
+   -> 0.0509s
+-- create_table(:release_burndown_days)
+   -> 0.0756s
+==  AddReleaseTables: migrated (0.1271s) ======================================
+
+==  NullTaskPosition: migrating ===============================================
+-- execute("update issues set position = null where tracker_id = 4")
+   -> 0.0009s
+-- create_table(:backlogs_tmp_set_task_tracker)
+   -> 0.0622s
+-- execute("insert into backlogs_tmp_set_task_tracker (story_root_id, story_lft, story_rgt)\n                select root_id, lft, rgt from issues where tracker_id in (2)")
+   -> 0.0068s
+-- execute("update issues set tracker_id = 4\n              where exists (select 1 from backlogs_tmp_set_task_tracker where root_id = story_root_id and lft > story_lft and rgt < story_rgt)")
+   -> 0.0004s
+-- drop_table(:backlogs_tmp_set_task_tracker)
+   -> 0.0166s
+==  NullTaskPosition: migrated (0.1074s) ======================================
+
+==  ReinstateRemaining: migrating =============================================
+==  ReinstateRemaining: migrated (0.0070s) ====================================
+
+==  FractionalPoints: migrating ===============================================
+-- add_column(:issues, :fractional_story_points, :float)
+   -> 0.1986s
+-- execute("update issues set fractional_story_points = story_points")
+   -> 0.0075s
+-- remove_column(:issues, :story_points)
+   -> 0.1859s
+-- add_column(:issues, :story_points, :float)
+   -> 0.2464s
+-- execute("update issues set story_points = fractional_story_points")
+   -> 0.0126s
+-- remove_column(:issues, :fractional_story_points)
+   -> 0.2436s
+==  FractionalPoints: migrated (0.8961s) ======================================
+
+==  AddStoryPositions: migrating ==============================================
+-- execute("select max(position) from issues")
+   -> 0.0006s
+-- execute("update issues\n               set position =  + id\n               where position is null and tracker_id in (2)")
+   -> 0.0081s
+==  AddStoryPositions: migrated (0.0182s) =====================================
+
+==  AddIndexOnIssuesPosition: migrating =======================================
+-- add_index(:issues, :position)
+   -> 0.0706s
+==  AddIndexOnIssuesPosition: migrated (0.0709s) ==============================
+
+==  SumRemainingHours: migrating ==============================================
+-- create_table(:backlogs_tmp_story_remaining_hours)
+   -> 0.0480s
+-- execute("insert into backlogs_tmp_story_remaining_hours (tmp_id, tmp_root_id, tmp_lft, tmp_rgt, tmp_remaining_hours)\n               select id, root_id, lft, rgt, 0\n               from issues\n               where tracker_id in (2) and lft <> (rgt - 1)")
+   -> 0.0005s
+-- execute("insert into backlogs_tmp_story_remaining_hours (tmp_id, tmp_root_id, tmp_lft, tmp_rgt, tmp_remaining_hours)\n               select issues.id, root_id, lft, rgt, coalesce(remaining_hours, 0)\n               from backlogs_tmp_story_remaining_hours\n               join issues on tmp_root_id = root_id and lft > tmp_lft and rgt < tmp_rgt")
+   -> 0.0004s
+-- execute("update issues\n               set remaining_hours = (\n                        select sum(tmp_remaining_hours)\n                        from backlogs_tmp_story_remaining_hours\n                        where root_id = tmp_root_id and lft < tmp_lft and rgt > tmp_rgt and tmp_lft = (tmp_rgt - 1)\n               )\n               where lft <> (rgt - 1) and id in (select tmp_id from backlogs_tmp_story_remaining_hours)")
+   -> 0.0003s
+-- drop_table(:backlogs_tmp_story_remaining_hours)
+   -> 0.0125s
+==  SumRemainingHours: migrated (0.0671s) =====================================
+
+==  UniquePositions: migrating ================================================
+-- change_column(:issues, :position, :integer, {:null=>false})
+   -> 0.1889s
+-- add_column(:issues, :position_lock, :integer, {:null=>false, :default=>0})
+   -> 0.2147s
+-- add_index(:issues, [:position, :position_lock], {:unique=>true})
+   -> 0.0789s
+==  UniquePositions: migrated (0.5023s) =======================================
+
+==  TrustUniquePositions: migrating ===========================================
+-- remove_index(:issues, [:position, :position_lock])
+   -> 0.0373s
+-- remove_column(:issues, :position_lock)
+   -> 0.2023s
+==  TrustUniquePositions: migrated (0.2399s) ==================================
+
+==  AddRbProjectSettings: migrating ===========================================
+-- create_table(:rb_project_settings)
+   -> 0.0603s
+==  AddRbProjectSettings: migrated (0.0606s) ==================================
+
+==  RbAddHistory: migrating ===================================================
+Rebuilding history...
+     1 (     1/2)...
+     2 (     2/2)...
+Rebuild done
+==  RbAddHistory: migrated (0.4634s) ==========================================
+
+==  AddShowInScrumStatsProjectSetting: migrating ==============================
+-- add_column(:rb_project_settings, :show_in_scrum_stats, :boolean, {:default=>true, :null=>false})
+   -> 0.1025s
+==  AddShowInScrumStatsProjectSetting: migrated (0.1029s) =====================
+
+==  AddReleaseIdToIssues: migrating ===========================================
+==  AddReleaseIdToIssues: migrated (0.0040s) ==================================
+
+==  AddSharingToReleases: migrating ===========================================
+-- add_column(:releases, :sharing, :string, {:default=>"none", :null=>false})
+   -> 0.1314s
+-- add_index(:releases, :sharing)
+   -> 0.0974s
+==  AddSharingToReleases: migrated (0.2293s) ==================================
+
+==  MigrateReleases: migrating ================================================
+-- add_column(:releases, :status, :string, {:null=>false, :default=>"open"})
+   -> 0.1107s
+-- add_column(:releases, :description, :text)
+   -> 0.1806s
+Migrating implicit releases...
+Migration of implicit releases done.
+==  MigrateReleases: migrated (0.2978s) =======================================
+
+==  AddReleasesPlannedVelocity: migrating =====================================
+-- add_column(:releases, :planned_velocity, :float)
+   -> 0.0725s
+==  AddReleasesPlannedVelocity: migrated (0.0726s) ============================
+
+==  AddReleaseRelationshipToIssues: migrating =================================
+-- add_column(:issues, :release_relationship, :string, {:default=>"auto", :null=>false})
+   -> 0.1977s
+==  AddReleaseRelationshipToIssues: migrated (0.1980s) ========================
+
+==  DropReleaseBurndownDays: migrating ========================================
+-- drop_table(:release_burndown_days)
+   -> 0.0186s
+-- remove_column(:releases, :initial_story_points)
+   -> 0.0825s
+==  DropReleaseBurndownDays: migrated (0.1023s) ===============================
+
+==  AddReleasesIndexes: migrating =============================================
+-- add_index(:issues, :release_id)
+   -> 0.0641s
+-- add_index(:issues, :release_relationship)
+   -> 0.0599s
+-- add_index(:releases, :project_id)
+   -> 0.0644s
+-- add_index(:releases, :status)
+   -> 0.0639s
+-- add_index(:releases, :release_start_date)
+   -> 0.0731s
+-- add_index(:releases, :release_end_date)
+   -> 0.0813s
+==  AddReleasesIndexes: migrated (0.4076s) ====================================
+
+==  AddIssuesRbcache: migrating ===============================================
+-- create_table(:rb_release_burndown_caches)
+   -> 0.0528s
+-- add_index(:rb_release_burndown_caches, :issue_id)
+   -> 0.0692s
+==  AddIssuesRbcache: migrated (0.1223s) ======================================
+
+==  AddIssuesReleaseDayCache: migrating =======================================
+-- create_table(:rb_release_burnchart_day_caches, {:id=>false})
+   -> 0.0691s
+-- add_index(:rb_release_burnchart_day_caches, :issue_id)
+   -> 0.0661s
+-- add_index(:rb_release_burnchart_day_caches, :release_id)
+   -> 0.0830s
+-- add_index(:rb_release_burnchart_day_caches, :day)
+   -> 0.0682s
+-- drop_table(:rb_release_burndown_caches)
+   -> 0.0080s
+==  AddIssuesReleaseDayCache: migrated (0.2953s) ==============================
+
+==  AddReleaseMultiview: migrating ============================================
+-- create_table(:rb_releases_multiview)
+   -> 0.0640s
+==  AddReleaseMultiview: migrated (0.0643s) ===================================
+
+Migrating redmine_better_gantt_chart (Redmine Better Gantt Chart plugin)...
+Migrating redmine_code_review (Redmine Code Review plugin)...
+Migrating redmine_glossary (Redmine Glossary Plugin)...
+==  CreateTerms: migrating ====================================================
+-- create_table(:term_categories, {:force=>true})
+   -> 0.0508s
+-- add_index("term_categories", ["project_id"], {:name=>"categories_project_id"})
+   -> 0.0739s
+-- create_table(:terms, {:force=>true})
+   -> 0.0535s
+-- add_index("terms", ["project_id"], {:name=>"terms_project_id"})
+   -> 0.0684s
+==  CreateTerms: migrated (0.2475s) ===========================================
+
+==  CreateGlossaryStyles: migrating ===========================================
+-- create_table(:glossary_styles)
+   -> 0.0532s
+-- add_column(:terms, :rubi, :string, {:default=>""})
+   -> 0.1012s
+-- add_column(:terms, :abbr_whole, :string, {:default=>""})
+   -> 0.1276s
+==  CreateGlossaryStyles: migrated (0.2827s) ==================================
+
+Migrating redmine_hours (Redmine Hours Plugin)...
+Migrating redmine_landing_page (Redmine Landing Page plugin)...
+Migrating redmine_reminder (Due Date Reminder plugin)...
+Migrating redmine_screenshot_paste (Screenshot Paste)...
+Migrating redmine_timesheet_plugin (Redmine Timesheet Plugin)...
+Migrating redmine_wiki_extensions (Redmine Wiki Extensions plugin)...
+Migrating redmine_wiki_lists (Redmine Wiki Lists plugin)...

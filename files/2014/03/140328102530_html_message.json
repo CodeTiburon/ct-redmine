@@ -1,0 +1,48 @@
+{
+  "Messages": [{
+    "Message 5334318d9fdef3623525f995": {
+      "text": "<font Swiss721 Condensed Regular><size 40>7<\\size><\\font>UCONN vs <font Swiss721 Condensed Regular><size 40>3<\\size><\\font>IOWA STATE",
+      "channelId": "espn-classic",
+      "tag": null,
+      "lastMessageInSection": false,
+      "type": "Scoreboard",
+      "uri": null,
+      "modifiedDate": 1395929485092,
+      "version": 1,
+      "startTime": "7:27 ET FRI",
+      "id": "5334318d9fdef3623525f995",
+      "gameNumber": null,
+      "playlistId": "53342e909fdef3623525f95a",
+      "sectionId": "533431559fdef3623525f98e",
+      "realtime": false,
+      "value": {
+        "ActiveBlock": "ThreeQuarter",
+        "IsLastItemInCategory": false,
+        "Key": "4,3/27/2014 10:11:00 AM,903fa814-f522-413c-bbc9-d9d0cae816bd",
+        "FuelGaugeCount": 7,
+        "Scoreboard": {
+          "GameStartTime": "7:27 ET FRI",
+          "GameDelayString": null,
+          "PregameText": "<font Swiss721 Condensed Regular><size 40>7<\\size><\\font>UCONN vs <font Swiss721 Condensed Regular><size 40>3<\\size><\\font>IOWA STATE",
+          "PregameVisitorLogo": "M:\\IMS_IMAGES\\SD\\LOGOS\\BASKETBALL\\COLLEGE\\MEN\\TEAMS\\CONNECTICUT.TGA",
+          "GameNumber": null,
+          "RNSPrimaryNetwork": null,
+          "DmGameID": null,
+          "RSNSecondaryNetwork": null,
+          "GameStatus": null,
+          "GameClock": null,
+          "PregameHomeLog": null,
+          "ScoreboardType": "PREGAME",
+          "GameDate": null
+        },
+        "ItemTypeID": "ScoreboardContainer",
+        "eventTime": null,
+        "Priority": 4
+      },
+      "messageGroup": 7,
+      "priorirty": 4,
+      "createdDate": 1395929485092,
+      "key": "4,3/27/2014 10:11:00 AM,903fa814-f522-413c-bbc9-d9d0cae816bd"
+    }
+  }]
+}

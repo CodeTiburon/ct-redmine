@@ -1,0 +1,832 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Stockbo</title>
+
+
+
+
+
+<meta http-equiv="x-ua-compatible" content="IE=edge">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="robots" content="index, follow">
+
+
+<link href="https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/statics/main.css" rel="stylesheet" type="text/css"/>
+<link href="https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/jcrop/jquery.Jcrop.min.css" rel="stylesheet" type="text/css"/>
+
+
+
+<link rel="stylesheet" type="text/css" href="https://stockbo.com/assets/themes/stockbo/css/smoothness/jquery-ui-1.10.3.custom.min.css">
+<link href="https://stockbo.com/assets/themes/stockbo/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+<script type="text/javascript" src="https://stockbo.com/assets/javascript/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/javascript/jqueryUI/jqueryUI.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/javascript/shared.min.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/themes/stockbo/js/theme.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/javascript/public.min.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/jwplayer/jwplayer.min.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/javascript/jstree/jquery.jstree.min.js"></script>
+
+
+
+<script type="text/javascript" language="javascript">
+    <!--
+    var baseURL 	= 'https://stockbo.com';
+    var theme		= 'stockbo';
+    var colorScheme	= 'style.main';
+    var imgPath		= 'https://stockbo.com/assets/themes/stockbo/images';
+    var pageID		= 'homepage';
+    var pageMode	= '';
+    var miniCart	= '1';
+    var browser 	= {  'mobile':'0',  'iOS':'0'  }
+
+    
+    
+    /*
+     * Currency Variables
+     */
+    var numset = new Object();
+    numset.cur_hide_denotation = 1;
+    numset.cur_currency_id = '5';
+    numset.cur_name = "Australian Dollar";
+    numset.cur_code = "AUD";
+    numset.cur_denotation = "$";
+    numset.cur_denotation_reset = '$';
+    numset.cur_decimal_separator = ".";
+    numset.cur_decimal_places = 2;
+    numset.cur_thousands_separator = ",";
+    numset.cur_pos_num_format = 1;
+    numset.cur_neg_num_format = 7;
+    numset.exchange_rate = 1;
+    /*
+     * Number Variables
+     */
+    numset.decimal_separator = ".";
+    numset.decimal_places = 2;
+    numset.thousands_separator = ",";
+    numset.neg_num_format = 1;
+    numset.strip_ezeros = 0;
+    /*
+     * Tax values
+     */
+    numset.tax_a = 0;
+    numset.tax_b = 0;
+    numset.tax_c = 0;
+    -->
+</script>
+
+<link rel="stylesheet" type="text/css" href="https://stockbo.com/assets/css/public.css">
+
+    <link rel="stylesheet" type="text/css" href="https://stockbo.com/assets/themes/stockbo/style.main.css">
+
+
+
+<script>
+    $(function () {
+//        $('#featuredSubnavMedia').addClass('selectedNav');
+
+
+        $('.mediaThumbContainer .addToLightboxButton').hover(function () {
+
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/lightbox.icon.hover.png');
+
+        }, function () {
+
+            var inlightbox = $(this).attr('inlightbox');
+            inlightbox = parseInt(inlightbox);
+
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/lightbox.icon.' + inlightbox + '.png');
+
+        });
+
+        $('.mediaThumbContainer .emailToFriend').hover(function () {
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/email.icon.hover.png');
+        }, function () {
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/email.icon.0.png');
+        });
+
+
+        $('.assignToPackageButton').hover(function () {
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/package.icon.hover.png');
+        }, function () {
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/package.icon.0.png');
+        });
+
+        $('.downloadMediaButton').hover(function(){
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/download.icon.hover.png');
+        }, function () {
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/download.icon.0.png');
+        });
+
+        $('.contrMediaEdit').hover(function(){
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/contr_edit_hover.png');
+        }, function () {
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/contr.edit.png');
+        });
+
+        $('.contrMediaDelete').hover(function(){
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/contrdeletehover.png');
+        }, function () {
+            $(this).attr('src', 'https://stockbo.com/assets/themes/stockbo/images/contr.delete.png');
+        });
+
+        
+
+            
+
+            
+            
+            
+
+            
+
+        
+
+
+    });
+</script>
+
+
+
+
+<script>
+    window.FileAPI = {
+        debug: false // debug mode
+        , staticPath: 'https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/FileAPI/' // path to *.swf
+    };
+</script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/FileAPI/FileAPI.min.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/FileAPI/FileAPI.exif.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/jquery.fileapi.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/jcrop/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="https://stockbo.com/assets/themes/stockbo/js/jquery.fileapi-master/statics/jquery.modal.js"></script>
+
+	<script type="text/javascript">
+
+		var featuredVideoOverVol = '50';
+		var featuredVideoVolume = '0';
+		
+		var featuredMedia = 
+		{
+            
+
+			'fadeSpeed'		: 1000,
+			'interval'		: 100000,
+			'detailsDelay'	: 1000,
+			'detailsDisTime': 4000
+		};
+		
+		function featuredVideoPlayer(mediaID,container)
+		{
+			jwplayer(container).setup(
+			{
+				'flashplayer': "https://stockbo.com/assets/jwplayer/player.swf",
+				'file': "https://stockbo.com/video.php?mediaID="+mediaID,
+				'autostart': '1',
+				'type': 'video',
+				'repeat': 'always',
+				'controlbar.position': 'none',
+				'logo.file': 'https://stockbo.com/assets/watermarks/',
+				'logo.hide': false,
+				'logo.position': 'bottom-left',
+				'stretching': 'uniform',
+				'width': '100%',
+				'height': '100%',
+				'skin': 'https://stockbo.com/assets/jwplayer/skins/nacht/nacht.zip',
+				'screencolor': '000000',
+				'volume': '0',
+				'modes': [
+					{ 'type': 'flash', src: 'https://stockbo.com/assets/jwplayer/player.swf' },
+					{ 'type': 'html5' },
+					{ 'type': 'download' }
+				]
+			});
+		}
+
+        $(window).load(function(){
+            $('.search-block-images-block, .image-by').fadeIn('slow');
+
+
+            $('#featuredMedia').hover(function(){
+                $('.list-of-images-wrapper').show('normal');
+            }, function(){
+                $('.list-of-images-wrapper').hide('normal');
+            });
+
+        });
+
+
+	</script>
+
+	<script type="text/javascript" src="https://stockbo.com/assets/javascript/index.js"></script>
+</head>
+<body>
+
+    
+
+	<div id="top-background-first">
+
+    <div id="logoContainer">
+
+        <a href="https://stockbo.com/index.php">
+            <img id="stockbo_logo" src="https://stockbo.com/assets/themes/stockbo/images/stockbo_logo.png"/>
+        </a>
+
+        
+            <form action="https://stockbo.com/search.php" method="get" id="searchFormTest">
+                <input type="hidden" name="clearSearch" value="true">
+
+                <div class="headerSearchBox">
+                    <input type="text" id="searchPhrase" name="searchPhrase" class="searchInputBox" value="        Seek. Explore. Discover">
+                </div>
+
+                
+
+                <div class="eyeGlass"></div>
+
+                
+                
+                
+
+            </form>
+
+        
+        <div id="headerMemberDetailsArea">
+
+            
+                                                                <a href="https://stockbo.com/login.php?jumpTo=members">Login</a>
+                &nbsp;
+                <a href="https://stockbo.com/create.account.php?jumpTo=members">Join</a>
+
+                                                        
+
+            
+                <a class="cart-link" href="https://stockbo.com/cart.php">
+                    <img class="cart-icon" src="https://stockbo.com/assets/themes/stockbo/images/cart.icon.png" alt="Your Cart">
+
+                    <strong>0</strong>
+
+                                            Items
+                    
+                    
+                </a>
+
+            
+        </div>    
+
+    </div>
+
+
+</div>
+
+
+<div id="overlay">&nbsp;</div>
+<div id="workbox"></div>
+<div id="hoverWindow">
+    <div id="hoverWindowInner"></div>
+</div>
+
+    
+    <div id="featuredMedia" style="background-image: url('https://stockbo.com/assets/cache/home-featured.jpg')">
+
+        <div class="search-block-images-block" style="display: none;">
+
+            <p>
+                Beautiful fair trade stock photos
+                
+            </p>
+
+            <form action="https://stockbo.com/search.php" method="get" id="form-serach-images" name="form-serach-images">
+
+                <input type="hidden" name="clearSearch" value="true">
+
+                <input id="search-images" type="text" name="searchPhrase" value="        Inspiring art at your fingertips">
+
+                <button id="submin-search-images"></button>
+				<div class="eyeGlass2"></div>
+            </form>
+
+            <div class="list-of-images-wrapper">
+
+                
+                    <ul class="list-of-images-one">
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=21&page=1">Animals & Pets</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=49&page=1">Celebrations</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=48&page=1">Education</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=20&page=1">Industry</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=51&page=1">Miscellaneous</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=109&page=1">Paintings</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=14&page=1">Sports & Fitness</a></li>
+                                            </ul>
+
+                    <ul class="list-of-images-one">
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=15&page=1">Architecture</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=47&page=1">Children</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=2&page=1">Fashion & Glam</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=39&page=1">Landscapes</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=22&page=1">Nature</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=36&page=1">People & Portrait</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=50&page=1">Transportation</a></li>
+                                            </ul>
+
+                    <ul class="list-of-images-one">
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=13&page=1">Business</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=38&page=1">Creative Arts</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=37&page=1">Food & Beverage</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=1&page=1">Lifestyle</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=8&page=1">Objects</a></li>
+                                                    <li><a href="https://stockbo.com/gallery.php?mode=gallery&id=19&page=1">Science & Tech</a></li>
+                                            </ul>
+
+                
+            </div>
+
+        </div>
+
+        <a href="https://stockbo.com/6214" class='image-by'>
+            Image by
+                            Ryan Jorgensen
+                    </a>
+
+
+        <div class="top-image-wrapper">
+            
+                 
+        </div>
+
+        
+
+        
+        
+
+        
+
+        
+        
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+        
+
+        
+
+    </div>
+
+	<div id="container">
+		
+    <div id="popup" class="popup" style="display: none;">
+        <div class="popup__body"><div class="js-img"></div></div>
+        <div style="margin: 0 0 5px; text-align: center;">
+            <div class="js-upload btn btn_browse btn_browse_small">Upload</div>
+        </div>
+    </div>
+
+    <div id="header"></div>
+
+    
+
+<div id="cartPreviewContainer">
+    <div id="miniCartContainer">LOADING</div>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+        <div class="title-block-line" id="main-title-block-line">
+            <p style="font-weight: bold;"><span style="color: #3399CC;"><a href="https://stockbo.com/featured.php?mode=subscriptions">See Plans and Pricing</a> | <a href="https://stockbo.com/photographers.php">See Photographers</a> | <a href="https://stockbo.com/gallery.php?mode=featured-media&page=1">Vote for Main Image</a></span></p>
+        </div>
+
+        <div class="features-photo-wrapper">
+
+            
+            
+                
+                <div class="homepageMediaList" id="homepageMediaList">
+                                            <a href="https://stockbo.com/7031">
+                            <img style="width: 100%;" src="https://stockbo.com/image.php?mediaID=MTMwNzlmYzc2N2M3ODg=&type=sample&folderID=NTY5ZmM3NjdjNzg4&size=694&crop=500&seo=sunset-at-the-north-sea-with-ammophila-in-the-foreground" class="mediaThumb showHoverWindow" mediaID="MTMwNzlmYzc2N2M3ODg=" alt="Sunset at the North Sea with Ammophila in the foreground">
+                        </a>
+                                    </div>
+
+                <div class="popular-media-block-info">
+                    <p class="featured-photo">Vote for next week’s featured image</p>
+
+                    <p class="see-portfolio">
+                        <span data-show="0">Learn More &#9660;</span>
+                        <a href="https://stockbo.com/gallery.php?mode=featured-media&page=1">More Featured &#9660;</a>
+                    </p>
+
+                    <div class="learn-more-info">
+                        <p><strong>We want to help our Photographers obtain maximum exposure.</strong> To achieve this, we've developed a fair and dynamic system that will allow them a chance to be promoted on our home page.<br /><br />Each and every <strong>Monday,</strong> we will select a handful of the best images that have been submitted to our weekly Assignments category. After selection, the images will be added to the Featured Media section. Within this special section, members have the chance to vote for their favourite image. Once our selections are placed in the Featured Media section, the image that is the most liked at the end of the week will be automatically promoted as the most prominent home page image for the following weekly period. This image remains fixed for an entire weekly period providing the Photographer with a week of front-line promotion. That's pretty cool right? Also, during the voting phase, the image that has the highest current like count will be displayed as the second most prominent home page image. This image can change dynamically as votes pour in during the week. :)<br /><br />So please... <strong>Support our Photographers!</strong> Check out the<strong> Featured Media </strong>page (From footer menu: Hover over Photos and select Featured) and click the like button on your favourite image! :)</p>
+                    </div>
+
+                </div>
+
+            
+            
+            <div class="free-photo-of-the-week">
+                
+                    <img style="width: 100%;" src="https://stockbo.com/assets/themes/stockbo/images/stockbo_block_slide.jpg" class="" mediaID="MTMwNzlmYzc2N2M3ODg=" alt="Sunset at the North Sea with Ammophila in the foreground">
+
+                
+            </div>
+
+            
+
+
+            <div class="featured-photographer-photo-wrapper">
+                <img style="width: 100%;" src="https://stockbo.com/avatar.php?memID=111&amp;size=694&amp;crop=500">
+            </div>
+
+            <div class="stock-image-link-bottom">
+                <p>Featured Photographer <span class="link-photographer">View Profile &#9660;</span></p>
+
+                <script>
+                    $(function(){
+                        $('.link-photographer').click(function(){
+                            window.location.href = 'https://stockbo.com/photographers.php?id=111&seoName=sean-locke';
+                        });
+                    });
+                </script>
+
+            </div>
+
+
+
+        </div>
+
+        
+            
+        
+
+        <div class="bottom-block-wrapper">
+
+            <div class="bottom-left-block">
+
+                <div class="divTableCell hpWelcomeMessage">
+
+                    
+                        <h2 id="contrib-title">It's All About You</h2>
+
+                        <div class="random-images-wrapper">
+
+                            
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=134&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=134&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=109&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=109&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=128&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=128&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=82&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=82&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=100&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=100&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=150&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=150&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=108&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=108&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=106&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=106&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                                                            <div class="random-images">
+                                    <a href="https://stockbo.com/gallery.php?mode=contributor-media&id=164&page=1">
+                                        <img src="https://stockbo.com/avatar.php?memID=164&size=150&crop=0">
+                                    </a>
+                                </div>
+                                
+
+                                
+
+                            
+                        </div>
+
+                    
+
+
+                </div>
+
+            </div>
+
+            <div class="bottom-right-block">
+
+                <p class="first-title">Simple Pricing with Images on Demand or Via Subscription</p>
+
+                <div class="packs-blocks-price packages">
+                    <div class="blocks-title">All images<br /><span>Starting from</span></div>
+                    <div class="blocks-number">$5<br /><span>each</span></div>
+                </div>
+
+                <hr />
+
+                <div class="packs-blocks-price subscriptions">
+                    <div class="blocks-title">Subscriptions<br /><span>XL images up to</span></div>
+                    <div class="blocks-number">70%<br /><span>cheaper</span></div>
+                </div>
+
+                <a href="https://stockbo.com/featured.php?mode=subscriptions" class="plans_and_pricing">See Plans and Pricing</a>
+
+                <div class="bottom-right-block-two">
+
+                    <p>Follow Us:</p>
+
+                    
+
+                    <a href="https://www.facebook.com/pages/Stockbo/144461135753869" class="facebook_logo" target="_blank"></a>
+                    <a href="https://twitter.com/stockbo/" class="twitter_logo" target="_blank"></a>
+                    <a href="http://pinterest.com/stockbo/" class="pinterest_logo" target="_blank"></a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="h-footer"></div>
+
+    </div>
+
+        <div class="cbFooter">
+        <div class="ft-cont-wrapper">
+
+
+            <div id="topNav">
+
+
+                <ul>
+
+                                            <li id="navNews">
+                            <a href="https://stockbo.com/news.php">News</a>
+                        </li>
+                    
+                    <li id="navPhotos">
+                        
+                        <span>Photos</span>
+
+                        <ul>
+
+                                                            <li id="photosSubnavFeatured">
+                                    <a href="https://stockbo.com/gallery.php?mode=featured-media&page=1">
+                                        Featured
+                                    </a>
+                                </li>
+                            
+                                                            <li id="photosSubnavPopular">
+                                    <a href="https://stockbo.com/gallery.php?mode=popular-media&page=1">
+                                        Popular
+                                    </a>
+                                </li>
+                            
+                                                            <li id="photosSubnavNewestMedia">
+                                    <a href="https://stockbo.com/gallery.php?mode=newest-media&page=1">
+                                        Newest
+                                    </a>
+                                </li>
+                            
+                        </ul>
+
+                    </li>
+
+                    
+                        
+                            
+                            
+
+                            
+
+                                
+                                    
+                                            
+                                    
+                                
+
+                                
+                                    
+                                            
+                                    
+                                
+
+                                
+                                    
+                                            
+                                    
+
+                                
+
+                                
+                                    
+                                            
+                                    
+                                
+
+                                
+                                    
+                                        
+                                    
+                                
+
+                            
+                        
+                    
+
+                    <li id="navGalleries">
+                        <a href="https://stockbo.com/gallery.php?mode=gallery">Galleries</a>
+
+                    </li>
+
+                    <li id="navPhotographers">
+                        <a href="https://stockbo.com/photographers.php">Photographers</a>
+                    </li>
+
+                                            <li id="navSubscriptions">
+                            <a href="https://stockbo.com/featured.php?mode=subscriptions">
+                                
+                                Pricing
+                            </a>
+                        </li>
+                    
+                                            <li id="navContributors">
+                            <span>Sell Images</span>
+                            
+
+                            <ul>
+
+                                <li id="featuredSubnavJoin">
+                                    
+                                    <a href="https://stockbo.com/content.php?id=77">Join</a>
+                                </li>
+
+                                <li id="featuredSubnavCriteria">
+                                    <a href="https://stockbo.com/content.php?id=79">Criteria</a>
+                                </li>
+
+                                <li id="featuredSubnavGuide">
+                                    <a href="https://stockbo.com/content.php?id=80">Guide</a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+                    
+                                                        <li id="navAboutUs"><a href="https://stockbo.com/about.php">About Us</a>
+                        </li>
+                    
+                        
+                    
+
+                    
+                        
+                        
+
+                    <li id="navHelpSupport">
+                        <span>Support</span>
+                        
+
+                        <ul>
+
+                            <li id="featuredSubnavContact">
+                                
+                                <a href="https://stockbo.com/contact.php">Contact</a>
+                            </li>
+
+                            <li id="featuredSubnavFaq">
+                                <a href="https://stockbo.com/content.php?id=85">FAQ</a>
+                            </li>
+
+                            <li id="featuredSubnavLicenses">
+                                <a href="https://stockbo.com/content.php?id=81">Licenses</a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                </ul>
+            </div>
+
+            <p>
+                <a class="copyright-links" href="https://stockbo.com/terms.of.use.php">Terms Of Use</a> | <a class="copyright-links" href="https://stockbo.com/privacy.policy.php">Privacy Policy</a> | <a class="copyright-links" href="https://stockbo.com/purchase.agreement.php">License Agreement</a> <br/> Copyright @ 2013 Stockbo.com, All Rights
+                Reserved.
+            </p>
+
+                            <div class="social-footer-buttons">
+
+                    <p>Follow Us:</p>
+
+                    <a href="https://www.facebook.com/pages/Stockbo/144461135753869" target="_blank"
+                       class="facebook_logo_min"></a>
+                    <a href="https://twitter.com/stockbo" target="_blank" class="twitter_logo_min"></a>
+                    <a href="http://pinterest.com/stockbo/" target="_blank" class="pinterest_logo_min"></a>
+
+                </div>
+            
+        </div>
+                
+    </div>
+
+
+<div id="statsCode"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47845444-1', 'stockbo.com');
+  ga('send', 'pageview');
+
+</script>
+
+</div>
+
+</body>
+</html>

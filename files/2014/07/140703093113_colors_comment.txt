@@ -1,0 +1,7 @@
+Regarding UX Design and LINKAVIE Yellow top bar in mobile app, please find attached the current LINKAVIE graphical chart.
+So would be good if we can keep working on this basis.
+
+In the site: 
+- Orange + Grey/Black/White is for B2C environment
+- Green + Grey/Black/White is for Events environment
+- Blue + Grey/Black/White is for Enterprise environment
