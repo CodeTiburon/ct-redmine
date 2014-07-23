@@ -13,8 +13,8 @@ gem "coderay", "~> 1.0.9"
 gem "fastercsv", "~> 1.5.0", :platforms => [:mri_18, :mingw_18, :jruby]
 gem "builder", "3.0.0"
 
-gem 'pry-rails'
-gem 'pry-debugger'
+gem 'pry-rails', :group => :development
+gem 'pry-debugger', :group => :development
 
 # Optional gem for LDAP authentication
 group :ldap do
