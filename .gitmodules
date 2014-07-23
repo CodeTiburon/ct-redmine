@@ -7,3 +7,6 @@
 [submodule "plugins/redmine_dmsf"]
 	path = plugins/redmine_dmsf
 	url = https://github.com/danmunn/redmine_dmsf.git
+[submodule "plugins/open_flash_chart"]
+	path = plugins/open_flash_chart
+	url = git://github.com/pullmonkey/open_flash_chart.git
