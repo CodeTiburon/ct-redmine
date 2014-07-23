@@ -1,0 +1,6 @@
+[submodule "plugins/ekanban"]
+	path = plugins/ekanban
+	url = https://github.com/samchen2009/ekanban.git
+[submodule "plugins/redmine_backlogs"]
+	path = plugins/redmine_backlogs
+	url = git://github.com/backlogs/redmine_backlogs.git
