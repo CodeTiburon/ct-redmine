@@ -4,3 +4,6 @@
 [submodule "plugins/redmine_backlogs"]
 	path = plugins/redmine_backlogs
 	url = git://github.com/backlogs/redmine_backlogs.git
+[submodule "plugins/redmine_dmsf"]
+	path = plugins/redmine_dmsf
+	url = https://github.com/danmunn/redmine_dmsf.git
