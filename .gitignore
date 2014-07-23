@@ -1,6 +1,6 @@
 .idea
 
-#rails specific
+# rails specific
 *.sqlite3
 config/database.yml
 log/*
