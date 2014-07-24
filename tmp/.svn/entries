@@ -1,46 +1,0 @@
-10
-
-dir
-12244
-http://svn.redmine.org/redmine/branches/2.3-stable/tmp
-http://svn.redmine.org/redmine
-
-
-
-2012-10-23T10:50:09.475373Z
-10702
-tmaruyama
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-e93f8b46-1217-0410-a6f0-8f06a7374b81
-
-test
-dir
-
-cache
-dir
-
-sessions
-dir
-
-thumbnails
-dir
-
-pdf
-dir
-
-sockets
-dir
-
