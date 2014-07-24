@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
 
-# TEST
-
 gem "puma"
 gem "i18n", "0.6.1" 
 gem "rack", "1.4.5"
 gem "rake", "10.1.0"
 gem "fcgi"
+gem "nokogiri", "< 1.6.0"
 #gem "rubytree"
 gem "rails"
 #gem "RedCloth", "4.2.9", :require => "redcloth"
