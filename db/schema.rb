@@ -679,6 +679,13 @@ ActiveRecord::Schema.define(:version => 20130819013955) do
     t.string  "salt",       :null => false
   end
 
+  create_table "prices", :force => true do |t|
+    t.integer "enumerations_id"
+    t.float   "price"
+  end
+
+  add_index "prices", ["enumerations_id"], :name => "index_prices_on_enumerations_id"
+
   create_table "projects", :force => true do |t|
     t.string   "name",              :default => "",    :null => false
     t.text     "description"

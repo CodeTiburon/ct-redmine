@@ -26,6 +26,9 @@ class IssuesController < ApplicationController
   before_filter :find_optional_project, :only => [:index]
   before_filter :check_for_default_issue_status, :only => [:new, :create]
   before_filter :build_new_issue_from_params, :only => [:new, :create, :update_form]
+
+  after_filter :find_ancestors, only: :update
+
   accept_rss_auth :index, :show
   accept_api_auth :index, :show, :create, :update, :destroy
 
@@ -176,6 +179,7 @@ class IssuesController < ApplicationController
   end
 
   def update
+    # binding.pry
     return unless update_issue_from_params
     @issue.save_attachments(params[:attachments] || (params[:issue] && params[:issue][:uploads]))
     saved = false
@@ -326,6 +330,50 @@ class IssuesController < ApplicationController
   end
 
   private
+
+  def find_ancestors
+
+    # New: If no subtasks under SPEC item or all subtasks have status 'New'.
+    # Resolved: All subtasks have status 'Resolved' or 'Closed'. At least one subtask have status 'Resolved'.
+    # Closed: All subtasks have status 'Closed'.
+    # In Progress: In all other cases.
+
+    if @issue.valid?
+      ancestors = @issue.root? ? [] : @issue.ancestors.visible.all
+      ancestors.each do |ancestor|
+        # Only if tracker is SPEC Item (id: 8)
+        if ancestor.tracker.id == 8
+          new_status = get_new_status ancestor.descendants.map(&:status_id)
+          ancestor.update_attribute(:status_id, new_status)
+        end
+      end
+
+    end
+
+  end
+
+  def get_new_status(statuses)
+
+    # 1 - New,
+    # 2 - In Progress,
+    # 3 - Resolved,
+    # 5 - Closed
+    status_match_collection = { 1 => [1], 3 => [3, 5], 5 => [5] }
+
+    if statuses.any?
+
+      statuses = statuses.uniq.sort
+      status_match_collection.each do |key, val|
+        return key if statuses == val
+      end
+
+      return 2
+
+    else
+      return 1
+    end
+
+  end
 
   def find_project
     project_id = params[:project_id] || (params[:issue] && params[:issue][:project_id])

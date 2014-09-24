@@ -66,6 +66,10 @@ module IssuesHelper
   end
 
   def render_issue_subject_with_tree(issue)
+
+    # TODO @ Get ancestors and check the status
+    # binding.pry
+
     s = ''
     ancestors = issue.root? ? [] : issue.ancestors.visible.all
     ancestors.each do |ancestor|
@@ -82,6 +86,7 @@ module IssuesHelper
   end
 
   def render_descendants_tree(issue)
+
     s = '<form><table class="list issues">'
     issue_list(issue.descendants.visible.sort_by(&:lft)) do |child, level|
       css = "issue issue-#{child.id} hascontextmenu"

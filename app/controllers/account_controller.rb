@@ -31,6 +31,7 @@ class AccountController < ApplicationController
     else
       authenticate_user
     end
+
   rescue AuthSourceException => e
     logger.error "An error occured when authenticating #{params[:username]}: #{e.message}"
     render_error :message => e.message
@@ -163,6 +164,10 @@ class AccountController < ApplicationController
   end
 
   def password_authentication
+
+    # params[:username] = 'testuser2'
+    # params[:password] = 'iwur9qjmdk'
+
     user = User.try_to_login(params[:username], params[:password])
 
     if user.nil?

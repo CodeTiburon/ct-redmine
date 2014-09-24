@@ -155,12 +155,15 @@ class User < Principal
 
   # Returns the user that matches provided login and password, or nil
   def self.try_to_login(login, password)
+
     login = login.to_s
     password = password.to_s
 
     # Make sure no one can sign in with an empty login or password
     return nil if login.empty? || password.empty?
+
     user = find_by_login(login)
+
     if user
       # user is already in local database
       return nil unless user.active?
@@ -256,6 +259,10 @@ class User < Principal
 
   # Returns true if +clear_password+ is the correct user's password, otherwise false
   def check_password?(clear_password)
+
+    # test_salt = salt_password clear_password
+    # binding.pry
+
     if auth_source_id.present?
       auth_source.authenticate(self.login, clear_password)
     else
