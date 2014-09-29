@@ -365,7 +365,7 @@ class IssuesController < ApplicationController
 
       if statuses == [1]
         return 1
-      elsif (statuses == [3]) || (statuses == [3, 5])
+      elsif statuses == [3] || statuses == [3, 5]
         return 3
       elsif statuses == [5]
         return 5
