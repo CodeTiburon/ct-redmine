@@ -27,7 +27,7 @@ class IssuesController < ApplicationController
   before_filter :check_for_default_issue_status, :only => [:new, :create]
   before_filter :build_new_issue_from_params, :only => [:new, :create, :update_form]
 
-  after_filter :find_ancestors, only: :update
+  after_filter :find_ancestors, :only => [:update, :create]
 
   accept_rss_auth :index, :show
   accept_api_auth :index, :show, :create, :update, :destroy
@@ -358,16 +358,20 @@ class IssuesController < ApplicationController
     # 2 - In Progress,
     # 3 - Resolved,
     # 5 - Closed
-    status_match_collection = { 1 => [1], 3 => [3, 5], 5 => [5] }
 
     if statuses.any?
 
       statuses = statuses.uniq.sort
-      status_match_collection.each do |key, val|
-        return key if statuses == val
-      end
 
-      return 2
+      if statuses == [1]
+        return 1
+      elsif (statuses == [3]) || (statuses == [3, 5])
+        return 3
+      elsif statuses == [5]
+        return 5
+      else
+        return 2
+      end
 
     else
       return 1
