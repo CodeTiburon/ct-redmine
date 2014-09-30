@@ -218,6 +218,7 @@ GEM
 PLATFORMS
   ruby
 
+
 DEPENDENCIES
   ZenTest (= 4.5.0)
   activerecord-jdbc-adapter (~> 1.2.6)
