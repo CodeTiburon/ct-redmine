@@ -16,6 +16,7 @@ gem "builder", "3.0.0"
 
 gem "pry-rails", :group => :development
 gem "pry-debugger", :group => :development
+gem "pry-stack_explorer", :group => :development
 
 # Optional gem for LDAP authentication
 group :ldap do
