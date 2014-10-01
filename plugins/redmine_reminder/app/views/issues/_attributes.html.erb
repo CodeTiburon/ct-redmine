@@ -20,6 +20,7 @@
                 :required => true %>
   <% # @issue.required_attribute?('assigned_to_id') %>
 </p>
+      
 <% end %>
 
 <% if @issue.safe_attribute?('category_id') && @issue.project.issue_categories.any? %>

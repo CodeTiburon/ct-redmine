@@ -28,5 +28,5 @@ class IssueStatusKanbanStatesController < ApplicationController
  	  	end
 	  	redirect_to :controller => "kanban_states", :action => "setup", :tab => 'Maps'
   end
-  
+
 end
